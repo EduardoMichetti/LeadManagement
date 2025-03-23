@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\LeadManagement.Communication\LeadManagement.Communication.csproj" />
     <ProjectReference Include="..\..\Shared\LeadManagement.Exceptions\LeadManagement.Exceptions.csproj" />
     <ProjectReference Include="..\LeadManagement.Application\LeadManagement.Application.csproj" />
