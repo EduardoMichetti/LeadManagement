@@ -31,9 +31,9 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
     {
         await Validate(request);
 
-        var user = _mapper.Map<Domain.Entities.LeadEntity>(request);
+        var lead = _mapper.Map<Domain.Entities.LeadEntity>(request);
 
-        await _writeOnlyRepository.Add(user);
+        await _writeOnlyRepository.Add(lead);
 
         await _unitOfWork.Commit();
 

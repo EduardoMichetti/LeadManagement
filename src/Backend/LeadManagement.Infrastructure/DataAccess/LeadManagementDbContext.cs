@@ -6,7 +6,7 @@ public class LeadManagementDbContext : DbContext
 {
     public LeadManagementDbContext(DbContextOptions options) : base(options) { }
 
-    public DbSet<LeadEntity> Leads { get; set; }
+    public DbSet<LeadEntity> Lead { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

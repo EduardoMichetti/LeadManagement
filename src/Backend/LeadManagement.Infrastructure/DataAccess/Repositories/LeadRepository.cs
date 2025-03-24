@@ -9,8 +9,8 @@ public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository
 
     public LeadRepository(LeadManagementDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task Add(LeadEntity lead) => await _dbContext.Leads.AddAsync(lead);
+    public async Task Add(LeadEntity lead) => await _dbContext.Lead.AddAsync(lead);
 
     public async Task<bool> ExistActiveLeadWithEmail(string email) =>
-        await _dbContext.Leads.AnyAsync(lead => lead.ContactEmail.Equals(email) && lead.Active);
+        await _dbContext.Lead.AnyAsync(lead => lead.ContactEmail.Equals(email) && lead.Active);
 }
