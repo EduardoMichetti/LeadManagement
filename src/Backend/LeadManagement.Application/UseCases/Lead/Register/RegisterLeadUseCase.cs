@@ -1,5 +1,6 @@
 ﻿using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
+using LeadManagement.Exceptions.ExceptionsBase;
 
 namespace LeadManagement.Application.UseCases.Lead.Register;
 
@@ -27,8 +28,9 @@ public class RegisterLeadUseCase
 
         if (!result.IsValid)
         {
-            var errorMessages = result.Errors.Select(e => e.ErrorMessage);
-            throw new Exception("Invalid request");
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
         }
     }
 }
