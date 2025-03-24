@@ -117,10 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CONTACT_EMAIL" xml:space="preserve">
-    <value>ContactEmail is required</value>
+  <data name="CONTACT_EMAIL_EMPTY" xml:space="preserve">
+    <value>ContactEmail is required f</value>
+    <comment>ContactEmail is required</comment>
   </data>
-  <data name="CONTACT_FIRST_NAME" xml:space="preserve">
+  <data name="CONTACT_EMAIL_INVALID" xml:space="preserve">
+    <value>Invalid email</value>
+    <comment>Invalid email</comment>
+  </data>
+  <data name="CONTACT_FIRST_NAME_EMPTY" xml:space="preserve">
     <value>ContactFirstName is required</value>
+    <comment>ContactFirstName is required</comment>
+  </data>
+  <data name="UNKNOWN_ERROR" xml:space="preserve">
+    <value>Internal Error</value>
+    <comment>Internal Error</comment>
   </data>
 </root>

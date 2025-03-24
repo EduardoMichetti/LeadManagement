@@ -61,20 +61,38 @@ namespace LeadManagement.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ContactEmail is required.
+        ///   Looks up a localized string similar to ContactEmail is required f.
         /// </summary>
-        public static string CONTACT_EMAIL {
+        public static string CONTACT_EMAIL_EMPTY {
             get {
-                return ResourceManager.GetString("CONTACT_EMAIL", resourceCulture);
+                return ResourceManager.GetString("CONTACT_EMAIL_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email.
+        /// </summary>
+        public static string CONTACT_EMAIL_INVALID {
+            get {
+                return ResourceManager.GetString("CONTACT_EMAIL_INVALID", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ContactFirstName is required.
         /// </summary>
-        public static string CONTACT_FIRST_NAME {
+        public static string CONTACT_FIRST_NAME_EMPTY {
             get {
-                return ResourceManager.GetString("CONTACT_FIRST_NAME", resourceCulture);
+                return ResourceManager.GetString("CONTACT_FIRST_NAME_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal Error.
+        /// </summary>
+        public static string UNKNOWN_ERROR {
+            get {
+                return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
     }
