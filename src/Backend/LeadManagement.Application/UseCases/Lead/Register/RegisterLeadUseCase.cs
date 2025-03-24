@@ -1,13 +1,17 @@
 ﻿using LeadManagement.Application.Services.AutoMapper;
 using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
+using LeadManagement.Domain.Repositories.Lead;
 using LeadManagement.Exceptions.ExceptionsBase;
 
 namespace LeadManagement.Application.UseCases.Lead.Register;
 
 public class RegisterLeadUseCase
 {
-    public ResponseRegisteredLeadJson Execute(RequestRegisterLeadJson request)
+    private readonly ILeadWriteOnlyRepository _writeOnlyRepository;
+    private readonly ILeadReadOnlyRepository _readOnlyRepository;
+
+    public async Task<ResponseRegisteredLeadJson> Execute(RequestRegisterLeadJson request)
     {
         Validate(request);
 
@@ -18,7 +22,7 @@ public class RegisterLeadUseCase
 
         var user = autoMapper.Map<Domain.Entities.LeadEntity>(request);
 
-        //todo: Salvar a entidade
+        await _writeOnlyRepository.Add(user);
 
         return new ResponseRegisteredLeadJson
         {
