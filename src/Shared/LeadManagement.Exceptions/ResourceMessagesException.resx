@@ -133,6 +133,14 @@
     <value>ContactFirstName is required</value>
     <comment>ContactFirstName is required</comment>
   </data>
+  <data name="CONTACT_PHONE_NUMBER_EMPTY" xml:space="preserve">
+    <value>teste</value>
+    <comment>ContactPhoneNumber is required</comment>
+  </data>
+  <data name="STATUS_EMPTY" xml:space="preserve">
+    <value />
+    <comment>Status not supported</comment>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Internal Error</value>
     <comment>Internal Error</comment>

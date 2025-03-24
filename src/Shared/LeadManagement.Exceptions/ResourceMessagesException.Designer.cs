@@ -97,6 +97,24 @@ namespace LeadManagement.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to teste.
+        /// </summary>
+        public static string CONTACT_PHONE_NUMBER_EMPTY {
+            get {
+                return ResourceManager.GetString("CONTACT_PHONE_NUMBER_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string STATUS_EMPTY {
+            get {
+                return ResourceManager.GetString("STATUS_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internal Error.
         /// </summary>
         public static string UNKNOWN_ERROR {

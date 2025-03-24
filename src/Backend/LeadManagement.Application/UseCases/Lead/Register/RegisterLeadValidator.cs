@@ -10,5 +10,6 @@ public class RegisterLeadValidator : AbstractValidator<RequestRegisterLeadJson>
         RuleFor(lead => lead.ContactFirstName).NotEmpty().WithMessage(ResourceMessagesException.CONTACT_FIRST_NAME_EMPTY);
         RuleFor(lead => lead.ContactEmail).NotEmpty().WithMessage(ResourceMessagesException.CONTACT_EMAIL_EMPTY);
         RuleFor(lead => lead.ContactEmail).EmailAddress().WithMessage(ResourceMessagesException.CONTACT_EMAIL_INVALID);
+        RuleFor(lead => lead.ContactPhoneNumber).NotEmpty().WithMessage(ResourceMessagesException.CONTACT_PHONE_NUMBER_EMPTY);
     }
 }

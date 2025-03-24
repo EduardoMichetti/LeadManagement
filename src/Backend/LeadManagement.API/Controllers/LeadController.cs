@@ -12,6 +12,7 @@ public class LeadController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredLeadJson) ,StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterLeadUseCase useCase,
         [FromBody] RequestRegisterLeadJson request)

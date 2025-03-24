@@ -129,6 +129,12 @@
   <data name="CONTACT_FIRST_NAME_EMPTY" xml:space="preserve">
     <value>ContactFirstName não pode estar vazio</value>
   </data>
+  <data name="CONTACT_PHONE_NUMBER_EMPTY" xml:space="preserve">
+    <value>ContactPhoneNumber  não pode estar vazio</value>
+  </data>
+  <data name="STATUS_EMPTY" xml:space="preserve">
+    <value>Status não suportado</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido</value>
   </data>

@@ -39,6 +39,7 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
 
         return new ResponseRegisteredLeadJson
         {
+            Id = lead.Id,
             ContactFirstName = request.ContactFirstName
         };
     }
