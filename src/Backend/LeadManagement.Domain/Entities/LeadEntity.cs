@@ -6,7 +6,7 @@ public enum LeadStatus
     Rejected = 2,
     Done = 3
 }
-public class Lead : EntityBase
+public class LeadEntity : EntityBase
 {
     //NOTE - Os dados do contato poderiam estar em uma entidade separada, mas para simplificar, vamos manter tudo em uma entidade só
     public string ContactFirstName { get; set; } = string.Empty;

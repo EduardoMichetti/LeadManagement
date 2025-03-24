@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LeadManagement.Communication.Requests
+﻿namespace LeadManagement.Communication.Requests
 {
     public class RequestRegisterLeadJson
     {
@@ -13,6 +6,9 @@ namespace LeadManagement.Communication.Requests
         public string ContactFullName { get; set; } = string.Empty;
         public string ContactPhoneNumber { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
-
+        public string Suburb { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public double Price { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LeadManagement.Communication.Requests;
+﻿using LeadManagement.Application.Services.AutoMapper;
+using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using LeadManagement.Exceptions.ExceptionsBase;
 
@@ -10,7 +11,12 @@ public class RegisterLeadUseCase
     {
         Validate(request);
 
-        //todo: mapear a request para a entidade
+        var autoMapper = new AutoMapper.MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile(new AutoMapping());
+        }).CreateMapper();
+
+        var user = autoMapper.Map<Domain.Entities.LeadEntity>(request);
 
         //todo: Salvar a entidade
 
