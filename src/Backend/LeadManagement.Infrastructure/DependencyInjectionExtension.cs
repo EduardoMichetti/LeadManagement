@@ -4,6 +4,7 @@ using LeadManagement.Domain.Repositories.Lead;
 using LeadManagement.Infrastructure.DataAccess;
 using LeadManagement.Infrastructure.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LeadManagement.Infrastructure;
@@ -11,10 +12,10 @@ public  static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var tipoBancoDados = configuration.GetConnectionString("DatabaseType");
-        var tipoBancoDadosEnum = (DatabaseType)Enum.Parse(typeof (DatabaseType), tipoBancoDados!);
+        var databaseType = configuration.GetConnectionString("DatabaseType");
+        var databaseTypeEnum = (DatabaseType)Enum.Parse(typeof (DatabaseType), databaseType!);
 
-        if (tipoBancoDadosEnum == DatabaseType.SqlServer)
+        if (databaseTypeEnum == DatabaseType.SqlServer)
         {
             AddDbContext_SqlServer(services, configuration);
         }
@@ -23,7 +24,7 @@ public  static class DependencyInjectionExtension
 
     private static void AddDbContext_SqlServer(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("ConnectionSqlServer");
+        var connectionString = configuration.GetConnectionString("ConnectionSQLServer");
 
         services.AddDbContext<LeadManagementDbContext>(options =>
         {
