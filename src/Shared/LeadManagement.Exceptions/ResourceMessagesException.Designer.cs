@@ -79,6 +79,15 @@ namespace LeadManagement.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email already exists.
+        /// </summary>
+        public static string CONTACT_EMAIL_REGISTERED {
+            get {
+                return ResourceManager.GetString("CONTACT_EMAIL_REGISTERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ContactFirstName is required.
         /// </summary>
         public static string CONTACT_FIRST_NAME_EMPTY {

@@ -2,6 +2,8 @@ using LeadManagement.API.Filters;
 using LeadManagement.API.Middleware;
 using LeadManagement.Application;
 using LeadManagement.Infrastructure;
+using LeadManagement.Infrastructure.Extensions;
+using LeadManagement.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,4 +36,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    var databaseType = builder.Configuration.DatabaseType();
+    var connectionString = builder.Configuration.ConnectionString();
+
+    DatabaseMigration.Migrate(databaseType, connectionString);
+}

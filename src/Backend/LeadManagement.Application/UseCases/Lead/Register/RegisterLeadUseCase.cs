@@ -3,6 +3,7 @@ using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
+using LeadManagement.Exceptions;
 using LeadManagement.Exceptions.ExceptionsBase;
 
 namespace LeadManagement.Application.UseCases.Lead.Register;
@@ -28,12 +29,7 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
 
     public async Task<ResponseRegisteredLeadJson> Execute(RequestRegisterLeadJson request)
     {
-        Validate(request);
-
-        //var autoMapper = new AutoMapper.MapperConfiguration(cfg =>
-        //{
-        //    cfg.AddProfile(new AutoMapping());
-        //}).CreateMapper();
+        await Validate(request);
 
         var user = _mapper.Map<Domain.Entities.LeadEntity>(request);
 
@@ -47,11 +43,17 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
         };
     }
 
-    private void Validate(RequestRegisterLeadJson request)
+    private async Task Validate(RequestRegisterLeadJson request)
     {
         var validator = new RegisterLeadValidator();
 
         var result = validator.Validate(request);
+
+        var emailExist = await _readOnlyRepository.ExistActiveLeadWithEmail(request.ContactEmail);
+        if (emailExist)
+        {
+            result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessagesException.CONTACT_EMAIL_REGISTERED));
+        }
 
         if (!result.IsValid)
         {

@@ -123,6 +123,9 @@
   <data name="CONTACT_EMAIL_INVALID" xml:space="preserve">
     <value>Email inválido</value>
   </data>
+  <data name="CONTACT_EMAIL_REGISTERED" xml:space="preserve">
+    <value>Email já existe</value>
+  </data>
   <data name="CONTACT_FIRST_NAME_EMPTY" xml:space="preserve">
     <value>ContactFirstName não pode estar vazio</value>
   </data>

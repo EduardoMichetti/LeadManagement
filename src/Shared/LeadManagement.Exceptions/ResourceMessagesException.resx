@@ -125,6 +125,10 @@
     <value>Invalid email</value>
     <comment>Invalid email</comment>
   </data>
+  <data name="CONTACT_EMAIL_REGISTERED" xml:space="preserve">
+    <value>Email already exists</value>
+    <comment>Email already exists</comment>
+  </data>
   <data name="CONTACT_FIRST_NAME_EMPTY" xml:space="preserve">
     <value>ContactFirstName is required</value>
     <comment>ContactFirstName is required</comment>
