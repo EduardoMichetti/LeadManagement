@@ -63,5 +63,17 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
             throw new ErrorOnValidationException(errorMessages);
         }
     }
+
+    public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
+    {
+        var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
+
+        return new ResponseFilteredLeadJson
+        {
+            //TODO: FAZER MAPPER
+            ContactFirstName = leads?.ContactFirstName,
+            ContactEmail = leads?.ContactEmail,
+        };
+    }
 }
 

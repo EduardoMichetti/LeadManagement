@@ -1,13 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using LeadManagement.Domain.Enums;
 
 namespace LeadManagement.Domain.Entities;
-public enum LeadStatus
-{
-    Pending = 0,
-    Approved = 1,
-    Rejected = 2,
-    Done = 3
-}
 
 [Table("TB_LEAD")]
 public class LeadEntity : EntityBase
@@ -23,5 +17,7 @@ public class LeadEntity : EntityBase
     public string Category { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public double Price { get; set; }
+
+    public double PriceAccepted { get; set; }
     public LeadStatus Status { get; set; } = LeadStatus.Pending;
 }

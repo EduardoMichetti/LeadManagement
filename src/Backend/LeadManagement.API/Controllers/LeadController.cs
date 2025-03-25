@@ -22,4 +22,21 @@ public class LeadController : ControllerBase
         return Created(string.Empty, result);
     }
 
+    [HttpPost("filter")]
+    [ProducesResponseType(typeof(ResponseFilteredLeadJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> FilterStatusCode(
+    [FromServices] IRegisterLeadUseCase useCase,
+    [FromBody] RequestFilterLeadJson request)
+    {
+        var response = await useCase.ExecuteFilter(request);
+
+        if (response.ContactEmail != null && response.ContactEmail.Length != 0)
+        {
+            return Ok(response);
+        }
+        return NoContent();
+
+    }
+
 }
