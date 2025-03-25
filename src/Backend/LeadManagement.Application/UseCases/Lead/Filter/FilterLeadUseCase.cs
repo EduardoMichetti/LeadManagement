@@ -30,37 +30,28 @@ public class FilterLeadUseCase : IFilterLeadUseCase
     }
     public async Task<ResponseFilteredLeadJson> ExecuteFilterID(long id)
     {
-
-        var lead = await _updateOnlyRepository.GetById(id);
+        var lead = await _readOnlyRepository.GetById(id);
 
         if (lead is null)
-        {
+        {//TODO: Alterar para not found tratado nas expcetions personalizadas
             throw new DataException("Lead not found");
         }
 
         return _mapper.Map<ResponseFilteredLeadJson>(lead);
     }
 
-    public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
-    {
-        Validate(request);
+    //public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
+    //{
+    //    Validate(request);
 
-        var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
+    //    var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
 
-        return _mapper.Map<ResponseFilteredLeadJson>(leads);
-        //return new ResponseFilteredLeadJson
-        //{
-        //    //TODO: FAZER MAPPER
-        //    ContactFirstName = leads?.ContactFirstName,
-        //    ContactEmail = leads?.ContactEmail,
-        //};
-    }
+    //    return _mapper.Map<ResponseFilteredLeadJson>(leads);
+    //}
 
     public async Task<ResponseListLeadJson> ExecuteFilterList(RequestFilterLeadJson request)
     {
         Validate(request);
-
-        //var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
 
         var filters = new Domain.Dto.FilterLeadsDto
         {
@@ -88,7 +79,4 @@ public class FilterLeadUseCase : IFilterLeadUseCase
             throw new ErrorOnValidationException(errorMessages);
         }
     }
-
-
-
 }

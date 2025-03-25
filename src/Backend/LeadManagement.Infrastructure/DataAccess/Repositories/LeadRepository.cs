@@ -18,13 +18,13 @@ public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository,
             .Lead.AnyAsync(lead => lead.ContactEmail.Equals(email) 
                 && lead.Active);
 
-    public async Task<LeadEntity?> GetLeadByStatus(LeadStatus status)
-    {
-        return await _dbContext
-            .Lead
-            .FirstOrDefaultAsync(lead => lead.Status.Equals(status)
-                && lead.Active);
-    }
+    //public async Task<LeadEntity?> GetLeadByStatus(LeadStatus status)
+    //{
+    //    return await _dbContext
+    //        .Lead
+    //        .FirstOrDefaultAsync(lead => lead.Status.Equals(status)
+    //            && lead.Active);
+    //}
 
     public async Task<IList<LeadEntity>> FilterList(FilterLeadsDto filters)
     {
@@ -37,7 +37,16 @@ public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository,
         return await query.ToListAsync();
     }
 
-    public async Task<LeadEntity?> GetById(long id)
+    async Task<LeadEntity?> ILeadReadOnlyRepository.GetById(long id)
+    {
+        return await _dbContext
+            .Lead
+            .AsNoTracking()
+            .FirstOrDefaultAsync(lead => lead.Active
+                             && lead.Id == id);
+    }
+
+    async Task<LeadEntity?> ILeadUpdateOnlyRepository.GetById(long id)
     {
         return await _dbContext
             .Lead
