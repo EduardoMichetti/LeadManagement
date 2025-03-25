@@ -3,7 +3,6 @@ using AutoMapper;
 using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using LeadManagement.Domain.Entities;
-using LeadManagement.Domain.Enums;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
 using LeadManagement.Domain.Services;
@@ -65,7 +64,7 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
             throw new DataException("Lead not found");
         }
 
-        UpdateLeadStatus(lead, request);
+        await UpdateLeadStatus(lead, request);
 
         _updateOnlyRepository.Update(lead);
 
@@ -111,10 +110,7 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
         lead.Status = request.Status;
         lead.PriceAccepted = lead.Price >= 500 ? lead.Price * 0.9 : lead.Price;
 
-        if (lead.Status == LeadStatus.Accept)
-        {
-            await _fileGenerationService.GenerateFileAsync(lead);
-        }
+        await _fileGenerationService.GenerateFileAsync(lead);
     }
 }
 
