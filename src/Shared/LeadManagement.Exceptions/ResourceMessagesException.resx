@@ -149,4 +149,8 @@
     <value>Internal Error</value>
     <comment>Internal Error</comment>
   </data>
+  <data name="ERROR_NOT_FOUND" xml:space="preserve">
+    <value>Data not found</value>
+    <comment>Registro não encontrado</comment>
+  </data>
 </root>

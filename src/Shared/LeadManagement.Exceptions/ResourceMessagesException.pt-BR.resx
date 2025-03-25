@@ -141,4 +141,7 @@
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido</value>
   </data>
+  <data name="ERROR_NOT_FOUND" xml:space="preserve">
+    <value>Registro não encontrado</value>
+  </data>
 </root>

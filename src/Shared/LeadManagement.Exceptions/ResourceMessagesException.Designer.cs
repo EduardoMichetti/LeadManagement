@@ -106,6 +106,15 @@ namespace LeadManagement.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data not found.
+        /// </summary>
+        public static string ERROR_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("ERROR_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status not acceptable.
         /// </summary>
         public static string STATUS_NOT_ACCEPTABLE {

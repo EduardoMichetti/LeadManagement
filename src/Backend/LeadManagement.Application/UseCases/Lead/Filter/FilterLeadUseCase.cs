@@ -4,6 +4,7 @@ using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
+using LeadManagement.Exceptions;
 using LeadManagement.Exceptions.ExceptionsBase;
 
 namespace LeadManagement.Application.UseCases.Lead.Filter;
@@ -32,22 +33,10 @@ public class FilterLeadUseCase : IFilterLeadUseCase
     {
         var lead = await _readOnlyRepository.GetById(id);
 
-        if (lead is null)
-        {//TODO: Alterar para not found tratado nas expcetions personalizadas
-            throw new DataException("Lead not found");
-        }
-
-        return _mapper.Map<ResponseFilteredLeadJson>(lead);
+        return lead is null
+            ? throw new NotFoundException(ResourceMessagesException.ERROR_NOT_FOUND)
+            : _mapper.Map<ResponseFilteredLeadJson>(lead);
     }
-
-    //public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
-    //{
-    //    Validate(request);
-
-    //    var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
-
-    //    return _mapper.Map<ResponseFilteredLeadJson>(leads);
-    //}
 
     public async Task<ResponseListLeadJson> ExecuteFilterList(RequestFilterLeadJson request)
     {

@@ -57,12 +57,8 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
     {
         ValidateUpdate(request);
 
-        var lead = await _updateOnlyRepository.GetById(id);
-
-        if (lead is null)
-        {//TODO: Alterar para not found tratado nas expcetions personalizadas
-            throw new DataException("Lead not found");
-        }
+        var lead = await _updateOnlyRepository.GetById(id) ?? 
+            throw new NotFoundException(ResourceMessagesException.ERROR_NOT_FOUND);
 
         await UpdateLeadStatus(lead, request);
 
