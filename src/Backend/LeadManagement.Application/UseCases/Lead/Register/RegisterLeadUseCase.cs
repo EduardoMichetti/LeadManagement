@@ -1,11 +1,12 @@
 ﻿using System.Data;
 using AutoMapper;
-using LeadManagement.Application.UseCases.Lead.Filter;
 using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Enums;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
+using LeadManagement.Domain.Services;
 using LeadManagement.Exceptions;
 using LeadManagement.Exceptions.ExceptionsBase;
 
@@ -18,19 +19,22 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
     private readonly ILeadUpdateOnlyRepository _updateOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IFileGenerationService _fileGenerationService;
 
     public RegisterLeadUseCase(
         ILeadWriteOnlyRepository writeOnlyRepository,
         ILeadReadOnlyRepository readOnlyRepository,
         ILeadUpdateOnlyRepository updateOnlyRepository,
         IUnitOfWork unitOfWork,
-        IMapper mapper)
+        IMapper mapper,
+        IFileGenerationService fileGenerationService)
     {
         _writeOnlyRepository = writeOnlyRepository;
         _readOnlyRepository = readOnlyRepository;
         _updateOnlyRepository = updateOnlyRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _fileGenerationService = fileGenerationService;
     }
 
     public async Task<ResponseRegisteredLeadJson> Execute(RequestRegisterLeadJson request)
@@ -102,10 +106,15 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
         }
     }
 
-    private static void UpdateLeadStatus(LeadEntity lead, RequestUpdateLeadJson request)
+    private async Task UpdateLeadStatus(LeadEntity lead, RequestUpdateLeadJson request)
     {
         lead.Status = request.Status;
         lead.PriceAccepted = lead.Price >= 500 ? lead.Price * 0.9 : lead.Price;
+
+        if (lead.Status == LeadStatus.Accept)
+        {
+            await _fileGenerationService.GenerateFileAsync(lead);
+        }
     }
 }
 

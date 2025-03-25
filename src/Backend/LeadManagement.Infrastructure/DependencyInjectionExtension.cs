@@ -1,9 +1,11 @@
 ﻿using LeadManagement.Domain.Enums;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
+using LeadManagement.Domain.Services;
 using LeadManagement.Infrastructure.DataAccess;
 using LeadManagement.Infrastructure.DataAccess.Repositories;
 using LeadManagement.Infrastructure.Extensions;
+using LeadManagement.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +40,8 @@ public  static class DependencyInjectionExtension
         services.AddScoped<ILeadReadOnlyRepository, LeadRepository>();
         services.AddScoped<ILeadWriteOnlyRepository, LeadRepository>();
         services.AddScoped<ILeadUpdateOnlyRepository, LeadRepository>();
-        
+        services.AddScoped<IFileGenerationService, FileGenerationService>();
+
     }
 
 }
