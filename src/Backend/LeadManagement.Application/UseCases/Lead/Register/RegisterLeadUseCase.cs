@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Data;
+using AutoMapper;
+using LeadManagement.Application.UseCases.Lead.Filter;
 using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
+using LeadManagement.Domain.Entities;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
 using LeadManagement.Exceptions;
@@ -12,17 +15,20 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
 {
     private readonly ILeadWriteOnlyRepository _writeOnlyRepository;
     private readonly ILeadReadOnlyRepository _readOnlyRepository;
+    private readonly ILeadUpdateOnlyRepository _updateOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
     public RegisterLeadUseCase(
         ILeadWriteOnlyRepository writeOnlyRepository,
         ILeadReadOnlyRepository readOnlyRepository,
+        ILeadUpdateOnlyRepository updateOnlyRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper)
     {
         _writeOnlyRepository = writeOnlyRepository;
         _readOnlyRepository = readOnlyRepository;
+        _updateOnlyRepository = updateOnlyRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
@@ -42,6 +48,24 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
             Id = lead.Id,
             ContactFirstName = request.ContactFirstName
         };
+    }
+
+    public async Task Update(long id, RequestUpdateLeadJson request)
+    {
+        ValidateUpdate(request);
+
+        var lead = await _updateOnlyRepository.GetById(id);
+
+        if (lead is null)
+        {//TODO: Alterar para not found tratado nas expcetions personalizadas
+            throw new DataException("Lead not found");
+        }
+
+        UpdateLeadStatus(lead, request);
+
+        _updateOnlyRepository.Update(lead);
+
+        await _unitOfWork.Commit();
     }
 
     private async Task Validate(RequestRegisterLeadJson request)
@@ -64,16 +88,24 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
         }
     }
 
-    //public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
-    //{
-    //    var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
+    private static void ValidateUpdate(RequestUpdateLeadJson request)
+    {
+        var validator = new RegisterLeadValidatorUpdate();
 
-    //    return new ResponseFilteredLeadJson
-    //    {
-    //        //TODO: FAZER MAPPER
-    //        ContactFirstName = leads?.ContactFirstName,
-    //        ContactEmail = leads?.ContactEmail,
-    //    };
-    //}
+        var result = validator.Validate(request);
+
+        if (!result.IsValid)
+        {
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
+        }
+    }
+
+    private static void UpdateLeadStatus(LeadEntity lead, RequestUpdateLeadJson request)
+    {
+        lead.Status = request.Status;
+        lead.PriceAccepted = lead.Price >= 500 ? lead.Price * 0.9 : lead.Price;
+    }
 }
 

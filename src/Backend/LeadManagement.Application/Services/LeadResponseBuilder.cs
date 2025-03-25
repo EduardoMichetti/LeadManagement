@@ -11,14 +11,14 @@ public class LeadResponseBuilder
             r.Id,
             r.CreatedDate,
             ContactFirstName = status == LeadStatus.Pending ? r.ContactFirstName : null,
-            ContactFullName = status == LeadStatus.Approved ? r.ContactFullName : null,
-            ContactPhoneNumber = status == LeadStatus.Approved ? r.ContactPhoneNumber : null,
-            ContactEmail = status == LeadStatus.Approved ? r.ContactEmail : null,
+            ContactFullName = status == LeadStatus.Accept ? r.ContactFullName : null,
+            ContactPhoneNumber = status == LeadStatus.Accept ? r.ContactPhoneNumber : null,
+            ContactEmail = status == LeadStatus.Accept ? r.ContactEmail : null,
             r.Suburb,
             r.Category,
             r.Description,
             Price = status == LeadStatus.Pending ? r.Price : (decimal?)null,
-            PriceAccepted = status == LeadStatus.Approved ? r.PriceAccepted : (decimal?)null
+            PriceAccepted = status == LeadStatus.Accept ? r.PriceAccepted : (decimal?)null
         }).ToList();
     }
 }

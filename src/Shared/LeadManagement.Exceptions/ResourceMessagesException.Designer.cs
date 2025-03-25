@@ -106,11 +106,20 @@ namespace LeadManagement.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Status not acceptable.
         /// </summary>
-        public static string STATUS_EMPTY {
+        public static string STATUS_NOT_ACCEPTABLE {
             get {
-                return ResourceManager.GetString("STATUS_EMPTY", resourceCulture);
+                return ResourceManager.GetString("STATUS_NOT_ACCEPTABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status não suportado.
+        /// </summary>
+        public static string STATUS_NOT_SUPPORTED {
+            get {
+                return ResourceManager.GetString("STATUS_NOT_SUPPORTED", resourceCulture);
             }
         }
         

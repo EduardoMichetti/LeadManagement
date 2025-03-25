@@ -86,4 +86,17 @@ public class LeadController : ControllerBase
     }
     */
 
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(
+    [FromServices] IRegisterLeadUseCase useCase,
+    [FromRoute] long id,
+    [FromBody] RequestUpdateLeadJson request)
+    {
+        await useCase.Update(id, request);
+
+        return NoContent();
+    }
 }

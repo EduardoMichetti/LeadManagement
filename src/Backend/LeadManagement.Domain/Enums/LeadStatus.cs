@@ -2,7 +2,7 @@
 public enum LeadStatus
 {
     Pending = 0,
-    Approved = 1,
-    Rejected = 2,
+    Accept = 1,
+    Decline = 2,
     Done = 3
 }
