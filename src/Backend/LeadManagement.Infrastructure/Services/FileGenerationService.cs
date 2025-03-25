@@ -27,6 +27,7 @@ public class FileGenerationService : IFileGenerationService
 
         await File.WriteAllTextAsync(fileName, content);
 
+        //NOTE - Proposital, quando implementar o serviço de email, remover esta classe
         Debug.WriteLine($"Arquivo {fileName} gerado com sucesso em: {currentDirectory}");
     }
 }

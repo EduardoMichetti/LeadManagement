@@ -1,6 +1,5 @@
 ﻿using LeadManagement.Domain.Dto;
 using LeadManagement.Domain.Entities;
-using LeadManagement.Domain.Enums;
 using LeadManagement.Domain.Repositories.Lead;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,23 +14,15 @@ public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository,
 
     public async Task<bool> ExistActiveLeadWithEmail(string email) =>
         await _dbContext
-            .Lead.AnyAsync(lead => lead.ContactEmail.Equals(email) 
+            .Lead.AnyAsync(lead => lead.ContactEmail.Equals(email)
                 && lead.Active);
-
-    //public async Task<LeadEntity?> GetLeadByStatus(LeadStatus status)
-    //{
-    //    return await _dbContext
-    //        .Lead
-    //        .FirstOrDefaultAsync(lead => lead.Status.Equals(status)
-    //            && lead.Active);
-    //}
 
     public async Task<IList<LeadEntity>> FilterList(FilterLeadsDto filters)
     {
         var query = _dbContext
             .Lead
             .AsNoTracking()
-            .Where(lead => lead.Active 
+            .Where(lead => lead.Active
                 && lead.Status.Equals(filters.Status));
 
         return await query.ToListAsync();

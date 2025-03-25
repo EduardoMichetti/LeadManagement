@@ -3,6 +3,7 @@ using LeadManagement.Domain.Enums;
 
 namespace LeadManagement.Domain.Entities;
 
+//TODO - Implementar a criação da entidade de Lead com EF
 [Table("TB_LEAD")]
 public class LeadEntity : EntityBase
 {

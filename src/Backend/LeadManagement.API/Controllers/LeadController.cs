@@ -12,7 +12,7 @@ public class LeadController : ControllerBase
 {
 
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseRegisteredLeadJson) ,StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseRegisteredLeadJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterLeadUseCase useCase,
@@ -36,23 +36,6 @@ public class LeadController : ControllerBase
         return Ok(response);
     }
 
-    //[HttpGet("filterByStatusCode")]
-    //[ProducesResponseType(typeof(ResponseFilteredLeadJson), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
-    //public async Task<IActionResult> FilterStatusCode(
-    //    [FromServices] IFilterLeadUseCase useCase,
-    //    [FromQuery] RequestFilterLeadJson request)
-    //{
-    //    var response = await useCase.ExecuteFilter(request);
-
-    //    if (response.ContactEmail != null && response.ContactEmail.Length != 0)
-    //    {
-    //        return Ok(response);
-    //    }
-    //    return NoContent();
-    //}
-
-
     [HttpGet("filterByStatus")]
     [ProducesResponseType(typeof(ResponseListLeadJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
@@ -68,23 +51,6 @@ public class LeadController : ControllerBase
         }
         return NoContent();
     }
-    /*
-    [HttpPost("filterByStatus")]
-    [ProducesResponseType(typeof(ResponseListLeadJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> FilterStatus(
-    [FromServices] IFilterLeadUseCase useCase,
-    [FromBody] RequestFilterLeadJson request)
-    {
-        var response = await useCase.ExecuteFilterList(request);
-
-        if (response.LeadsList.Any())
-        {
-            return Ok(response);
-        }
-        return NoContent();
-    }
-    */
 
     [HttpPut]
     [Route("{id}")]
