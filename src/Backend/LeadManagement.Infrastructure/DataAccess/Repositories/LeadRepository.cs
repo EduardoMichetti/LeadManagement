@@ -1,10 +1,11 @@
-﻿using LeadManagement.Domain.Entities;
+﻿using LeadManagement.Domain.Dto;
+using LeadManagement.Domain.Entities;
 using LeadManagement.Domain.Enums;
 using LeadManagement.Domain.Repositories.Lead;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeadManagement.Infrastructure.DataAccess.Repositories;
-public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository
+public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository, ILeadUpdateOnlyRepository
 {
     private readonly LeadManagementDbContext _dbContext;
 
@@ -23,14 +24,29 @@ public class LeadRepository : ILeadWriteOnlyRepository, ILeadReadOnlyRepository
             .Lead
             .FirstOrDefaultAsync(lead => lead.Status.Equals(status)
                 && lead.Active);
-        //return await _dbContext
-        //    .Lead
-        //    .FirstOrDefaultAsync(lead => lead.Status.ToString().Equals(status, StringComparison.OrdinalIgnoreCase)
-        //        && lead.Active);
     }
 
-    public Task<IEnumerable<LeadEntity?>> GetStatus()
+    public async Task<IList<LeadEntity>> FilterList(FilterLeadsDto filters)
     {
-        throw new NotImplementedException();
+        var query = _dbContext
+            .Lead
+            .AsNoTracking()
+            .Where(lead => lead.Active 
+                && lead.Status.Equals(filters.Status));
+
+        return await query.ToListAsync();
+    }
+
+    public async Task<LeadEntity?> GetById(long id)
+    {
+        return await _dbContext
+            .Lead
+            .FirstOrDefaultAsync(lead => lead.Active
+                             && lead.Id == id);
+    }
+
+    public void Update(LeadEntity lead)
+    {
+        _dbContext.Lead.Update(lead);
     }
 }

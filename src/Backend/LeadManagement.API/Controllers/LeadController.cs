@@ -1,4 +1,5 @@
-﻿using LeadManagement.Application.UseCases.Lead.Register;
+﻿using LeadManagement.Application.UseCases.Lead.Filter;
+using LeadManagement.Application.UseCases.Lead.Register;
 using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +23,40 @@ public class LeadController : ControllerBase
         return Created(string.Empty, result);
     }
 
-    [HttpPost("filter")]
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseFilteredLeadJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]//alterar pra 404notfound
+    public async Task<IActionResult> FilterStatusID(
+    [FromServices] IFilterLeadUseCase useCase,
+    [FromRoute] long id)
+    {
+        var response = await useCase.ExecuteFilterID(id);
+
+        return Ok(response);
+    }
+
+    [HttpGet("filterByStatusCode")]
     [ProducesResponseType(typeof(ResponseFilteredLeadJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
     public async Task<IActionResult> FilterStatusCode(
-    [FromServices] IRegisterLeadUseCase useCase,
+        [FromServices] IFilterLeadUseCase useCase,
+        [FromQuery] RequestFilterLeadJson request)
+    {
+        var response = await useCase.ExecuteFilter(request);
+
+        if (response.ContactEmail != null && response.ContactEmail.Length != 0)
+        {
+            return Ok(response);
+        }
+        return NoContent();
+    }
+    /*
+    [HttpPost("filterByStatusCode")]
+    [ProducesResponseType(typeof(ResponseFilteredLeadJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> FilterStatusCode(
+    [FromServices] IFilterLeadUseCase useCase,
     [FromBody] RequestFilterLeadJson request)
     {
         var response = await useCase.ExecuteFilter(request);
@@ -36,7 +66,40 @@ public class LeadController : ControllerBase
             return Ok(response);
         }
         return NoContent();
-
     }
+    */
+
+    [HttpGet("filterByStatus")]
+    [ProducesResponseType(typeof(ResponseListLeadJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> FilterStatus(
+    [FromServices] IFilterLeadUseCase useCase,
+    [FromQuery] RequestFilterLeadJson request)
+    {
+        var response = await useCase.ExecuteFilterList(request);
+
+        if (response.LeadsList.Any())
+        {
+            return Ok(response);
+        }
+        return NoContent();
+    }
+    /*
+    [HttpPost("filterByStatus")]
+    [ProducesResponseType(typeof(ResponseListLeadJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> FilterStatus(
+    [FromServices] IFilterLeadUseCase useCase,
+    [FromBody] RequestFilterLeadJson request)
+    {
+        var response = await useCase.ExecuteFilterList(request);
+
+        if (response.LeadsList.Any())
+        {
+            return Ok(response);
+        }
+        return NoContent();
+    }
+    */
 
 }

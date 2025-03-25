@@ -1,4 +1,5 @@
 ﻿using LeadManagement.Application.Services.AutoMapper;
+using LeadManagement.Application.UseCases.Lead.Filter;
 using LeadManagement.Application.UseCases.Lead.Register;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,7 @@ public static class DependencyInjectionExtension
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterLeadUseCase, RegisterLeadUseCase>();
+        services.AddScoped<IFilterLeadUseCase, FilterLeadUseCase>();
     }
 
 }

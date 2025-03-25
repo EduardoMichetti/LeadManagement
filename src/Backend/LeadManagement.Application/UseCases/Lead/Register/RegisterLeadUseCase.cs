@@ -64,16 +64,16 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
         }
     }
 
-    public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
-    {
-        var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
+    //public async Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request)
+    //{
+    //    var leads = await _readOnlyRepository.GetLeadByStatus(request.Status);
 
-        return new ResponseFilteredLeadJson
-        {
-            //TODO: FAZER MAPPER
-            ContactFirstName = leads?.ContactFirstName,
-            ContactEmail = leads?.ContactEmail,
-        };
-    }
+    //    return new ResponseFilteredLeadJson
+    //    {
+    //        //TODO: FAZER MAPPER
+    //        ContactFirstName = leads?.ContactFirstName,
+    //        ContactEmail = leads?.ContactEmail,
+    //    };
+    //}
 }
 

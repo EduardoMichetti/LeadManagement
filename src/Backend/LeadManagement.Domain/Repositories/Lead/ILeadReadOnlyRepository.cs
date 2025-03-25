@@ -1,4 +1,5 @@
-﻿using LeadManagement.Domain.Enums;
+﻿using LeadManagement.Domain.Dto;
+using LeadManagement.Domain.Enums;
 
 namespace LeadManagement.Domain.Repositories.Lead;
 public interface ILeadReadOnlyRepository
@@ -7,5 +8,5 @@ public interface ILeadReadOnlyRepository
 
     public Task<Entities.LeadEntity?> GetLeadByStatus(LeadStatus status);
 
-    public Task<IEnumerable<Entities.LeadEntity?>> GetStatus();
+    Task<IList<Entities.LeadEntity>> FilterList(FilterLeadsDto filters);
 }

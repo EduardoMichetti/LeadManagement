@@ -6,5 +6,5 @@ public interface IRegisterLeadUseCase
 {
     public Task<ResponseRegisteredLeadJson> Execute(RequestRegisterLeadJson request);
 
-    public Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request);
+    //public Task<ResponseFilteredLeadJson> ExecuteFilter(RequestFilterLeadJson request);
 }
