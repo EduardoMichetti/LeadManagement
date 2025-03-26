@@ -134,7 +134,7 @@
     <comment>ContactFirstName is required</comment>
   </data>
   <data name="CONTACT_PHONE_NUMBER_EMPTY" xml:space="preserve">
-    <value>teste</value>
+    <value>ContactPhoneNumber  is required</value>
     <comment>ContactPhoneNumber is required</comment>
   </data>
   <data name="STATUS_NOT_SUPPORTED" xml:space="preserve">

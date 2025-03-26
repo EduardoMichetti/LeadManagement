@@ -1,0 +1,834 @@
+{
+	"info": {
+		"_postman_id": "792b82bd-dbbc-4c63-985f-d64ad97c2c73",
+		"name": "API_LeadManagement_WITH_TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24626096"
+	},
+	"item": [
+		{
+			"name": "201 - Deve salvar um registro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Extracting the ID from the response and storing it in a variable\r",
+							"const leadId = pm.response.json().id;\r",
+							"pm.collectionVariables.set(\"leadId\", leadId);\r",
+							"\r",
+							"// Test if the request was successful\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if the response contains an ID\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.exist;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "pt-BR",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contactFirstName\": \"Bill\",\r\n  \"contactFullName\": \"Bill Joe\",\r\n  \"contactPhoneNumber\": \"04987654321\",\r\n  \"contactEmail\": \"bill.fake@mail.com\",\r\n  \"suburb\": \"Yanderra 2574\",\r\n  \"category\": \"Painters\",\r\n  \"description\": \"Need to paint 2 aluminum windows and a sliding glass door\",\r\n  \"price\": 62.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:7071/Lead' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"contactFirstName\": \"\",\r\n  \"contactFullName\": \"string\",\r\n  \"contactPhoneNumber\": \"string\",\r\n  \"contactEmail\": \"string\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "400 - Testar erro email já existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Error message should indicate existing email\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(400);\r",
+							"    pm.expect(pm.response.json().errors).to.eql([\"Email já existe\"]);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "pt-BR",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contactFirstName\": \"Bill\",\r\n  \"contactFullName\": \"Bill Joe\",\r\n  \"contactPhoneNumber\": \"04987654321\",\r\n  \"contactEmail\": \"bill.fake@mail.com\",\r\n  \"suburb\": \"Yanderra 2574\",\r\n  \"category\": \"Painters\",\r\n  \"description\": \"Need to paint 2 aluminum windows and a sliding glass door\",\r\n  \"price\": 62.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:7071/Lead' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"contactFirstName\": \"\",\r\n  \"contactFullName\": \"string\",\r\n  \"contactPhoneNumber\": \"string\",\r\n  \"contactEmail\": \"string\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "400 - Testar erro email inválido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Email already exists\", function () {\r",
+							"    pm.expect(pm.response.json().errors).to.include(\"Email inválido\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "pt-BR",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contactFirstName\": \"Bill\",\r\n  \"contactFullName\": \"Bill Joe\",\r\n  \"contactPhoneNumber\": \"04987654321\",\r\n  \"contactEmail\": \"bill.fakemail.com\",\r\n  \"suburb\": \"Yanderra 2574\",\r\n  \"category\": \"Painters\",\r\n  \"description\": \"Need to paint 2 aluminum windows and a sliding glass door\",\r\n  \"price\": 62.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:7071/Lead' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"contactFirstName\": \"\",\r\n  \"contactFullName\": \"string\",\r\n  \"contactPhoneNumber\": \"string\",\r\n  \"contactEmail\": \"string\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "400 - Testar erro falta de campo obrigatório",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check for 'ContactFirstName cannot be empty' error\", function () {\r",
+							"    pm.expect(pm.response.json().errors).to.include(\"ContactFirstName não pode estar vazio\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "pt-BR",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contactFullName\": \"Bill Joe\",\r\n  \"contactPhoneNumber\": \"04987654321\",\r\n  \"contactEmail\": \"bill.fakemail.com\",\r\n  \"suburb\": \"Yanderra 2574\",\r\n  \"category\": \"Painters\",\r\n  \"description\": \"Need to paint 2 aluminum windows and a sliding glass door\",\r\n  \"price\": 62.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:7071/Lead' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"contactFirstName\": \"\",\r\n  \"contactFullName\": \"string\",\r\n  \"contactPhoneNumber\": \"string\",\r\n  \"contactEmail\": \"string\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "200 - Deve retornar um registro com sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for successful response status\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response body properties\r",
+							"pm.test(\"Response body has 'id' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('id');\r",
+							"});\r",
+							"pm.test(\"Response body has 'active' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('active');\r",
+							"});\r",
+							"pm.test(\"Response body has 'contactFirstName' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('contactFirstName');\r",
+							"});\r",
+							"pm.test(\"Response body has 'contactFullName' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('contactFullName');\r",
+							"});\r",
+							"pm.test(\"Response body has 'contactPhoneNumber' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('contactPhoneNumber');\r",
+							"});\r",
+							"pm.test(\"Response body has 'contactEmail' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('contactEmail');\r",
+							"});\r",
+							"pm.test(\"Response body has 'suburb' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('suburb');\r",
+							"});\r",
+							"pm.test(\"Response body has 'category' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('category');\r",
+							"});\r",
+							"pm.test(\"Response body has 'description' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('description');\r",
+							"});\r",
+							"pm.test(\"Response body has 'price' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('price');\r",
+							"});\r",
+							"pm.test(\"Response body has 'priceAccepted' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('priceAccepted');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7071/Lead/{{leadId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"{{leadId}}"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: text/plain'"
+			},
+			"response": []
+		},
+		{
+			"name": "404 - Testar registro não encontrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 404 - Not Found\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains error message for data not found\", function () {\r",
+							"    pm.expect(pm.response.json().errors).to.deep.include(\"Data not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7071/Lead/0",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"0"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: text/plain'"
+			},
+			"response": []
+		},
+		{
+			"name": "204 - Testar atualizar status pra Decline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed the duplicate test and syntax\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has valid properties\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).not.eql(null);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead/{{leadId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"{{leadId}}"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: */*' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"status\": 1\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "400 - Testar atualizar com status não aceito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status not acceptable\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"    pm.expect(pm.response.json().errors).to.include(\"Status not acceptable\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead/{{leadId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"{{leadId}}"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: */*' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"status\": 1\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "400 - Testar atualizar com status não suportado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed the duplicate test and syntax\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has valid properties\", function () {\r",
+							"    const responseData = pm.response.text();\r",
+							"    pm.expect(responseData).not.eql(null);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead/{{leadId}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"{{leadId}}"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: */*' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"status\": 1\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "201 - Deve salvar um registro com preço maior que 500",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Extracting the ID from the response and storing it in a variable\r",
+							"const leadId = pm.response.json().id;\r",
+							"pm.collectionVariables.set(\"leadId500\", leadId);\r",
+							"\r",
+							"// Extracting the price from the response and storing it in a variable\r",
+							"const leadPrice = pm.response.json().price;\r",
+							"pm.collectionVariables.set(\"leadPrice\", leadPrice);\r",
+							"\r",
+							"// Test if the request was successful\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if the response contains an ID\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.exist;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "pt-BR",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contactFirstName\": \"Chris\",\r\n  \"contactFullName\": \"Chris Sanderson\",\r\n  \"contactPhoneNumber\": \"04987654321\",\r\n  \"contactEmail\": \"another.fake@hipmail.com\",\r\n  \"suburb\": \"Quinns Rocks 6030\",\r\n  \"category\": \"Home Renovations\",\r\n  \"description\": \"There is a two story building at the front of the main house that's...\",\r\n  \"price\": 560.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://localhost:7071/Lead' \\\r\n  -H 'accept: text/plain' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"contactFirstName\": \"\",\r\n  \"contactFullName\": \"string\",\r\n  \"contactPhoneNumber\": \"string\",\r\n  \"contactEmail\": \"string\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "204 - Testar atualizar status pra Accept com preço maior que 500",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for successful response\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7071/Lead/{{leadId500}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"{{leadId500}}"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'PUT' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: */*' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -d '{\r\n  \"status\": 1\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "200 - Validar se preço aceito foi salvo com valor correto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Extracting the values from the response body\r",
+							"let responseJson = pm.response.json();\r",
+							"let price = responseJson.price;\r",
+							"let priceAccept = responseJson.priceAccepted;\r",
+							"\r",
+							"// Calculating the 10% less value of price\r",
+							"let tenPercentLess = price * 0.9;\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accepted price with correct discount value\", function () {\r",
+							"    pm.expect(priceAccept).to.be.at.most(tenPercentLess);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has all the expected fields\", function () {\r",
+							"    pm.expect(responseJson).to.have.property('id');\r",
+							"    pm.expect(responseJson).to.have.property('active');\r",
+							"    pm.expect(responseJson).to.have.property('createdDate');\r",
+							"    pm.expect(responseJson).to.have.property('contactFirstName');\r",
+							"    pm.expect(responseJson).to.have.property('contactFullName');\r",
+							"    pm.expect(responseJson).to.have.property('contactPhoneNumber');\r",
+							"    pm.expect(responseJson).to.have.property('contactEmail');\r",
+							"    pm.expect(responseJson).to.have.property('suburb');\r",
+							"    pm.expect(responseJson).to.have.property('category');\r",
+							"    pm.expect(responseJson).to.have.property('description');\r",
+							"    pm.expect(responseJson).to.have.property('price');\r",
+							"    pm.expect(responseJson).to.have.property('priceAccepted');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7071/Lead/{{leadId500}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"{{leadId500}}"
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:7071/Lead/1' \\\r\n  -H 'accept: text/plain'"
+			},
+			"response": []
+		},
+		{
+			"name": "200 - Validar busca por staus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for successful response status\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response body properties\r",
+							"pm.test(\"Response body has 'leadsList' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('leadsList');\r",
+							"    pm.expect(pm.response.json().leadsList).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:7071/Lead/filterByStatus?Status=1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"Lead",
+						"filterByStatus"
+					],
+					"query": [
+						{
+							"key": "Status",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://localhost:7071/Lead/filterByStatus?Status=1' \\\r\n  -H 'accept: text/plain'"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "leadId",
+			"value": ""
+		},
+		{
+			"key": "leadId500",
+			"value": ""
+		},
+		{
+			"key": "leadPrice",
+			"value": ""
+		}
+	]
+}

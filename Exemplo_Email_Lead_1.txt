@@ -1,0 +1,19 @@
+Subject: Lead Update Notification
+
+Dear Eduardo,
+
+We are pleased to inform you that the status of your lead has been updated.
+
+Lead Details:
+Job ID: 1
+Status: Accept
+Contact full name: Eduardo Michetti Mendes Santos
+Contact email : email@email.com
+Contact phone number: (37)99981-0000
+Price Accepted: 450
+Lead Description: descricao
+
+Thank you for your attention.
+
+Best regards,
+Lead Management Team

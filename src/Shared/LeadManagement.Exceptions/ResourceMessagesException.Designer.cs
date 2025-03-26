@@ -97,7 +97,7 @@ namespace LeadManagement.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to teste.
+        ///   Looks up a localized string similar to ContactPhoneNumber  is required.
         /// </summary>
         public static string CONTACT_PHONE_NUMBER_EMPTY {
             get {
