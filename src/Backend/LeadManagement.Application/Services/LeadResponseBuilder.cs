@@ -6,7 +6,6 @@ public class LeadResponseBuilder
 {
     public static List<object> BuildResponse(List<ResponseFilteredLeadJson> leads, LeadStatus status)
     {
-        //TODO: Implement the logic to build the response based on the status
         return leads.Select(r => (object)new
         {
             r.Id,

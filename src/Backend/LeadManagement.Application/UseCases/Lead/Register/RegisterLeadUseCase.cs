@@ -3,6 +3,7 @@ using AutoMapper;
 using LeadManagement.Communication.Requests;
 using LeadManagement.Communication.Responses;
 using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Enums;
 using LeadManagement.Domain.Repositories;
 using LeadManagement.Domain.Repositories.Lead;
 using LeadManagement.Domain.Services;
@@ -19,6 +20,9 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IFileGenerationService _fileGenerationService;
+
+    private const double LEAD_DISCOUNT_PERCENTAGE = 0.9;
+    private const double LEAD_BASE_DISCOUNT_VALUE = 500;
 
     public RegisterLeadUseCase(
         ILeadWriteOnlyRepository writeOnlyRepository,
@@ -104,9 +108,11 @@ public class RegisterLeadUseCase : IRegisterLeadUseCase
     private async Task UpdateLeadStatus(LeadEntity lead, RequestUpdateLeadJson request)
     {
         lead.Status = request.Status;
-        lead.PriceAccepted = lead.Price >= 500 ? lead.Price * 0.9 : lead.Price;
-
-        await _fileGenerationService.GenerateFileAsync(lead);
+        if (lead.Status == LeadStatus.Accept)
+        {
+            lead.PriceAccepted = lead.Price >= LEAD_BASE_DISCOUNT_VALUE ? lead.Price * LEAD_DISCOUNT_PERCENTAGE : lead.Price;
+            await _fileGenerationService.GenerateFileAsync(lead);
+        }
     }
 }
 
