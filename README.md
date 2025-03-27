@@ -60,6 +60,11 @@ A Lead Management API é uma aplicação para gerenciar leads, permitindo o regi
     - `200 OK`
     - `404 Not Found`: `ResponseErrorJson`
 
+## Banco de Dados
+
+A aplicação utiliza um banco de dados SQL Server para armazenar os dados. O banco de dados é criado automaticamente ao executar a aplicação.
+Um script de criação da tabela `Lead` está disponível na raiz deste projeto com o nome de SctiptTbLead.sql.
+
 ## Swagger
 
 A API possui documentação gerada automaticamente pelo Swagger. 
