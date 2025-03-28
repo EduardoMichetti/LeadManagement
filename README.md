@@ -11,6 +11,21 @@ A Lead Management API é uma aplicação para gerenciar leads, permitindo o regi
 - Testes - Não implementei testes unitários, por questão de tempo, mas criei uma collection de testes com IA via Postman, disponível na raiz deste projeto.
 - Para simular o envio de email criei um serviço para gerar um arquivo TXT, o arquivo é salvo na raiz da solução API e deixei uma cópia na raiz do projeto.
 
+## Índice
+
+- [Descrição](#descrição)
+- [Notas](#notas)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Endpoints](#endpoints)
+  - [Registrar Lead](#registrar-lead)
+  - [Filtrar Lead por ID](#filtrar-lead-por-id)
+  - [Filtrar Leads por Status](#filtrar-leads-por-status)
+  - [Atualizar Lead](#atualizar-lead)
+- [Banco de Dados](#banco-de-dados)
+- [Swagger](#swagger)
+- [Como Executar](#como-executar)
+
 ## Tecnologias Utilizadas
 
 - C#
